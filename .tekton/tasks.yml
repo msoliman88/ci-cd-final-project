@@ -1,9 +1,10 @@
+---
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: cleanup
 spec:
-  description: This will cleanup the workspace
+  description: This task will clean up a workspace by deleting all the files.
   workspaces:
     - name: source
   steps:
@@ -39,7 +40,7 @@ kind: Task
 metadata:
   name: nose
 spec:
-  description: This will make a nose test
+  description: This task will unit test with testing framework nose
   workspaces:
     - name: source
   params:
@@ -52,9 +53,9 @@ spec:
       image: python:3.9-slim
       workingDir: $(workspaces.source.path)
       script: |
-          #!/bin/bash
-          set -e
-          python -m pip install --upgrade pip wheel
-          pip install -r requirements.txt
-          nosetests $(params.args)
+        #!/bin/bash
+        set -e
+        python -m pip install --upgrade pip wheel
+        pip install -r requirements.txt
+        nosetests $(params.args)
 ...
